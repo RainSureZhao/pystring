@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <cctype>
+#include <stdexcept>
 
 namespace pystring{
     ///////////////////////////////////////////////////
@@ -54,6 +56,50 @@ namespace pystring{
     /// the same as python's find() method, except that an exception is raised 
     /// if str is not in string.
     int index(const std::string &str, const std::string &sub, int start = 0, int end = -1);
+    
+    ////////////////////////////////////////////////
+    /// @brief: This function detects whether a string consists of letters and strings
+    ///
+    bool isalnum(const std::string &str);
+    
+    ////////////////////////////////////////////////
+    /// @brief: This function detects whether a string consists of only letters.
+    /// 
+    bool isalpha(const std::string &str);
+    
+    ///////////////////////////////////////////////
+    /// @brief: This function detects whether a string consists only of numbers 
+    /// and is valid only for 0 and positive numbers.
+    /// 
+    bool isdigit(const std::string &str);
+    
+    ///////////////////////////////////////////////
+    /// @brief: This function detects whether the string consists of lowercase letters
+    ///
+    bool islower(const std::string &str);
+    
+    ///////////////////////////////////////////////
+    /// @brief: This function detects whether the string consists of whitespaces
+    ///
+    bool isspace(const std::string &str);
+
+    //////////////////////////////////////////////
+    /// @brief: This function detects whether the string consists of uppercase letters
+    ///
+    bool isupper(const std::string &str);
+    
+    ///////////////////////////////////////////////
+    /// @brief: This function detects whether all words in the string start with a
+    /// capital letter and all other letters are lowercase.
+    /// 
+    bool istitle(const std::string &str);
+    
+    ///////////////////////////////////////////////
+    /// @brief: This function is used to concatenate the elements in a sequence
+    /// with the specified string to produce a new string
+    ///
+    std::string join(const std::string &str, const std::vector<std::string> &seq);
+    
 }
 
 

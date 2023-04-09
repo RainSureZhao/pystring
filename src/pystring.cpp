@@ -1,18 +1,14 @@
 #include "pystring/pystring.h"
-#include <cctype>
-#include <cstring>
-#include <algorithm>
-#include <vector>
-#include <stdexcept>
+
 
 namespace pystring {
     std::string capitalize(const std::string &str) {
         std::string::size_type len = str.size();
         std::string res(str);
         if(len > 0) {
-            if(islower(res[0])) res[0] = static_cast<char>(toupper(str[0]));
+            if(std::islower(res[0])) res[0] = static_cast<char>(std::toupper(str[0]));
             for(std::string::size_type i = 1; i < len; i ++) {
-                if(isupper(res[i])) res[i] = static_cast<char>(tolower(res[i]));
+                if(std::isupper(res[i])) res[i] = static_cast<char>(tolower(res[i]));
             }
         }
         return res;
@@ -89,7 +85,7 @@ namespace pystring {
     }
 
     int find(const std::string &str, const std::string &sub, int start, int end) {
-        if(end == -1) end = str.size() - 1;
+        if(end == -1) end = static_cast<int>(str.size()) - 1;
          auto res = str.find(sub, start);
         if(res == std::string::npos || res + sub.size() - 1 > end) return -1;
         return static_cast<int>(res);
@@ -100,4 +96,96 @@ namespace pystring {
         if(res == -1) throw std::out_of_range("substring not found");
         return res;
     }
+    
+    bool isalnum(const std::string &str) {
+        auto len = str.size();
+        if(len == 0) return false;
+        for(auto x : str) {
+            if(!std::isalnum(x)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    bool isalpha(const std::string &str) {
+        auto len = str.size();
+        if(len == 0) return false;
+        for(auto x : str) {
+            if(!std::isalpha(x)) return false;
+        }
+        return true;
+    }
+    
+    bool isdigit(const std::string &str) {
+        auto len = str.size();
+        if(len == 0) return false;
+        for(auto x : str) {
+            if(!std::isdigit(x)) return false;
+        }
+        return true;
+    }
+    
+    bool islower(const std::string &str) {
+        auto len = str.size();
+        if(len == 0) return false;
+        for(auto x : str) {
+            if(!std::islower(x)) return false;
+        }
+        return true;
+    }
+    
+    bool isspace(const std::string &str) {
+        auto len = str.size();
+        if(len == 0) return false;
+        for(auto x : str) {
+            if(!std::isspace(x)) return false;
+        }
+        return true;
+    }
+    
+    bool istitle(const std::string &str) {
+        auto len = str.size();
+        if(len == 0) return false;
+        bool cased = false, previous_is_cased = false;
+        for(auto x : str) {
+            if(std::isupper(x)) {
+                if(previous_is_cased) {
+                    return false;
+                }
+                previous_is_cased = true;
+                cased = true;
+            }else if(std::islower(x)) {
+                if(!previous_is_cased) {
+                    return false;
+                }
+                previous_is_cased = true;
+                cased = true;
+            }else {
+                previous_is_cased = false;
+            }
+        }
+        return cased;
+    }
+    
+    bool isupper(const std::string &str) {
+        auto len = str.size();
+        if(len == 0) return false;
+        for(auto x : str) {
+            if(!std::isupper(x)) return false;
+        }
+        return true;
+    }
+    
+    std::string join(const std::string &str, const std::vector<std::string> &seq) {
+        auto seqlen = seq.size();
+        if(seqlen == 0) return str;
+        auto res = seq[0];
+        for(int i = 1; i < seqlen; i ++) {
+            res += str + seq[i];
+        }
+        return res;
+    }
+    
+    
 }
