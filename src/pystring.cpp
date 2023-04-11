@@ -1,3 +1,4 @@
+#include <sstream>
 #include "pystring/pystring.h"
 
 
@@ -187,5 +188,111 @@ namespace pystring {
         return res;
     }
     
+    std::string ljust(const std::string &str, size_t width, char fillchar) {
+        std::string res;
+        auto len = str.size();
+        if(width < len) return str;
+        res = str + std::string(width - len, fillchar);
+        return res;
+    }
     
+    std::string rjust(const std::string &str, size_t width, char fillchar) {
+        std::string res;
+        auto len = str.size();
+        if(width < len) return str;
+        res = std::string(width - len, fillchar) + str;
+        return res;
+    }
+    
+    std::string lower(const std::string &str) {
+        std::string res(str);
+        for(auto &x : res) {
+            x = static_cast<char>(std::tolower(x));
+        }
+        return res;
+    }
+    
+    std::string upper(const std::string &str) {
+        std::string res(str);
+        for(auto x : res) {
+            x = static_cast<char>(std::tolower(x));
+        }
+        return res;
+    }
+    
+    std::string lstrip(const std::string &str, const std::string &chars) {
+        // use C++ to implement the lstrip function
+        std::string res(str);
+        auto len = res.size();
+        if(len == 0) return res;
+        auto charslen = chars.size();
+        if(charslen == 0) {
+            for(auto i = 0; i < len; i ++) {
+                if(!std::isspace(res[i])) {
+                    res = res.substr(i);
+                    break;
+                }
+            }
+        } else {
+            size_t idx = 0;
+            for(auto i = 0; i < len; i ++) {
+                if(res[i] != chars[idx]) {
+                    if((idx == charslen - 1 || res[i] != chars[idx + 1])) {
+                        res = res.substr(i);
+                        break;
+                    } else idx ++;
+                }
+            }
+        }
+        return res;
+    }
+    
+    std::string mul(const std::string &str, int n) {
+        if(n <= 0) return "";
+        if(n == 1) return str;
+        std::ostringstream os;
+        for(int i = 0; i < n; i ++) {
+            os << str;
+        }
+        return os.str();
+    }
+    
+    std::vector<std::string> partition(const std::string &str, const std::string &seq) {
+        std::vector<std::string> res;
+        res.resize(3);
+        int pos = str.find(seq);
+        if(pos == std::string::npos) {
+            res[0] = str;
+            res[1] = "";
+            res[2] = "";
+        } else {
+            res[0] = str.substr(0, pos);
+            res[1] = seq;
+            res[2] = str.substr(pos + seq.size());
+        }
+        return res;
+    }
+    
+    std::string replace(const std::string &str, const std::string &oldstr, const std::string &newstr, int count) {
+        if(count == 0) return str;
+        if(count == -1) count = INT_MAX;
+        std::string res(str);
+        
+        auto newlen = newstr.size(), oldlen = oldstr.size();
+        auto len = res.size();
+        auto pos = res.find(oldstr);
+        int sofar = 0;
+        while(pos != std::string::npos ) {
+            if(sofar >= count) break;
+            res.replace(pos, oldlen, newstr);
+            sofar ++;
+            pos += static_cast<int>(newlen);
+            if(oldlen != 0) {
+                pos = res.find(oldstr, pos);
+            } else {
+                pos = res.find(oldstr, pos + 1);
+            }
+        }
+        return res;
+    }
 }

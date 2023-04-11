@@ -100,6 +100,61 @@ namespace pystring{
     ///
     std::string join(const std::string &str, const std::vector<std::string> &seq);
     
+    ///////////////////////////////////////////////
+    /// @brief: Returns a new string with the original string left-aligned and 
+    /// padded with fillchar to the specified length. 
+    /// If the specified length is less than the length of the original string, 
+    /// return the original string.
+    /// width: The length of the new string
+    /// fillchar: If no character is specified, it defaults to whitespace.
+    /// 
+    std::string ljust(const std::string &str, size_t width, char fillchar = ' ');
+    
+    ///////////////////////////////////////////////
+    /// @brief: Returns a new string with the original string right-aligned and 
+    /// padded with fillchar to the specified length. 
+    /// If the specified length is less than the length of the original string, 
+    /// return the original string.
+    /// width: The length of the new string
+    /// fillchar: If no character is specified, it defaults to whitespace.
+    /// 
+    std::string rjust(const std::string &str, size_t width, char fillchar = ' ');
+    
+    ///////////////////////////////////////////////
+    /// @brief: Return a copy of the string converted to lowercase.
+    ///
+    std::string lower(const std::string &str);
+    
+    //////////////////////////////////////////////
+    /// @brief: Return a copy of the string converted to uppercase.
+    ///
+    std::string upper(const std::string &str);
+    
+    //////////////////////////////////////////////
+    /// @brief: Return a copy of the string with leading characters removed. If chars is omitted or None,
+    /// whitespace characters are removed. If given and not None, chars must be a string;
+    /// the characters in the string will be stripped from the beginning of the string this method is called on.
+    std::string lstrip(const std::string &str, const std::string &chars = " "); 
+    
+    /////////////////////////////////////////////
+    /// @brief:  Return a copy of the string, concatenated N times, together.
+    /// 
+    std::string mul(const std::string &str, int n);
+    
+    /////////////////////////////////////////////
+    /// @brief: Split the string around first occurrence of sep.
+    /// Three strings will always placed into result. If sep is found, the strings will
+    /// be the text before sep, sep itself, and the remaining text. If sep is
+    /// not found, the original string will be returned with two empty strings.
+    ///
+    std::vector<std::string> partition(const std::string & str, const std::string & sep);
+
+    /////////////////////////////////////////////
+    /// @brief: Return a copy of the string with all occurrences of substring old replaced by new.
+    /// If the optional argument count is given, only the first count occurrences are replaced.
+    /// 
+    std::string replace(const std::string &str, const std::string &oldstr, const std::string &newstr, int count = -1);
+
 }
 
 
